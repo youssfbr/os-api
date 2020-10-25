@@ -20,16 +20,16 @@ public class Client implements Serializable {
 	private Long id;
 	
 	@NotBlank
-	@Size(max = 60)
+	@Size(min = 4, max = 60)
 	private String name;
 	
 	@NotBlank
 	@Email
-	@Size(max = 255)
+	@Size(min = 7, max = 255)
 	private String email;
 	
 	@NotBlank
-	@Size(max = 20)
+	@Size(min = 8, max = 20)
 	private String telephone;
 	
 	public Client() {
