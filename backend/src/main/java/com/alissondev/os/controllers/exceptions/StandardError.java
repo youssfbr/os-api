@@ -4,12 +4,18 @@ import java.io.Serializable;
 import java.time.Instant;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
+@JsonInclude(Include.NON_NULL)
 public class StandardError implements Serializable {	
 	private static final long serialVersionUID = 1L;
 	
 	private Instant timestamp;
 	private Integer status;
 	private String error;
+	private String message;
+	private String path;
 	private List<Field> fields;
 	
 	public static class Field {
@@ -65,6 +71,22 @@ public class StandardError implements Serializable {
 
 	public void setError(String error) {
 		this.error = error;
+	}	
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getPath() {
+		return path;
+	}
+
+	public void setPath(String path) {
+		this.path = path;
 	}
 
 	public List<Field> getFields() {

@@ -3,6 +3,8 @@ package com.alissondev.os.controllers.exceptions;
 import java.time.Instant;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +12,11 @@ import org.springframework.validation.FieldError;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+
+import com.alissondev.os.services.exceptions.EmailExistException;
 
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
@@ -36,5 +41,20 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 		err.setFields(fields);
 		
 		return super.handleExceptionInternal(ex, err, headers, status, request);
+	}
+	
+	@ExceptionHandler(EmailExistException.class)
+	public ResponseEntity<StandardError> EmailFound(EmailExistException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+
+		StandardError err = new StandardError();
+		err.setTimestamp(Instant.now());
+		err.setStatus(status.value());
+		
+		err.setError("Email já existente");
+		err.setMessage(e.getMessage());
+		err.setPath(request.getRequestURI());		
+		
+		return ResponseEntity.status(status).body(err);
 	}
 }
