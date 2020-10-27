@@ -20,22 +20,24 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.alissondev.os.entities.Client;
 import com.alissondev.os.repositories.ClientRepository;
+import com.alissondev.os.services.ClientService;
 
 @RestController
 @RequestMapping(value = "/clients")
 public class ClientController {
+
 	
 	@Autowired
-	private ClientRepository repository;
+	private ClientService service;
 	
 	@GetMapping
 	public  List<Client> findAll() {
-		return repository.findAll();
+		return service.findAll();
 	}
 	
 	@GetMapping("/{id}")
 	public ResponseEntity<Client> findById(@PathVariable Long id) {
-		Optional<Client> result = repository.findById(id);		
+		Optional<Client> result = service.findById(id);		
 		
 		if (result.isPresent()) {
 			return ResponseEntity.ok(result.get());
@@ -47,18 +49,18 @@ public class ClientController {
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
 	public Client insert(@Valid @RequestBody Client client) {
-		return repository.save(client);	
+		return service.save(client);	
 	}
 	
 	@PutMapping("/{id}")
 	public ResponseEntity<Client> update(@PathVariable Long id, @Valid @RequestBody Client client) {
 		
-		if (!repository.existsById(id)) {
+		if (!service.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
 		
 		client.setId(id);
-		client = repository.save(client);
+		client = service.save(client);
 		
 		return ResponseEntity.ok(client);
 	}
@@ -66,11 +68,11 @@ public class ClientController {
 	@DeleteMapping("/{id}")
 	public ResponseEntity<Void> delete(@PathVariable Long id) {
 		
-		if (!repository.existsById(id)) {
+		if (!service.existsById(id)) {
 			return ResponseEntity.notFound().build();
 		}
 		
-		repository.deleteById(id);
+		service.deleteById(id);
 		
 		return ResponseEntity.noContent().build();
 	}

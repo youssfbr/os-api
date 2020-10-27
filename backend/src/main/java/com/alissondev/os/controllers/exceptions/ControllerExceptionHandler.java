@@ -33,7 +33,6 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 		err.setTimestamp(Instant.now());
 		err.setStatus(status.value());
 		err.setError("Um ou mais campos inválidos. Verifique se estão nulos e preencha-os corretamente.");
-//		err.setMessage(ex.getMessage());
 		err.setFields(fields);
 		
 		return super.handleExceptionInternal(ex, err, headers, status, request);
