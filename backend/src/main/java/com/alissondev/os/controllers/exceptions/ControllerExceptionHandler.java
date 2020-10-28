@@ -17,6 +17,7 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 import com.alissondev.os.services.exceptions.EmailExistException;
+import com.alissondev.os.services.exceptions.NotFoundException;
 
 @ControllerAdvice
 public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
@@ -49,12 +50,24 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
-		err.setStatus(status.value());
-		
+		err.setStatus(status.value());		
 		err.setError("Email já existente");
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());		
 		
 		return ResponseEntity.status(status).body(err);
+	}
+	
+	@ExceptionHandler(NotFoundException.class)
+	public ResponseEntity<StandardError> NotFound(NotFoundException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.NOT_FOUND;
+
+		StandardError err = new StandardError();
+		err.setTimestamp(Instant.now());
+		err.setStatus(status.value());
+		err.setMessage(e.getMessage());
+		err.setPath(request.getRequestURI());		
+		
+		return ResponseEntity.status(status).body(err);		
 	}
 }

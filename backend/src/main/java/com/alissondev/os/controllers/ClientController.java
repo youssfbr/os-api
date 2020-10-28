@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alissondev.os.entities.Client;
-import com.alissondev.os.repositories.ClientRepository;
 import com.alissondev.os.services.ClientService;
 
 @RestController

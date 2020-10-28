@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -13,6 +14,8 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
 import com.alissondev.os.entities.enums.StatusServiceOrder;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonProperty.Access;
 
 @Entity
 public class ServiceOrder implements Serializable {
@@ -22,13 +25,21 @@ public class ServiceOrder implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private LocalDateTime openDate;
-	
-	@Enumerated(EnumType.STRING)
-	private StatusServiceOrder status;
 	private String description;
 	private BigDecimal price;
+	
+	@JsonProperty(access = Access.READ_ONLY)
+	private LocalDateTime openDate;
+	
+	@JsonProperty(access = Access.READ_ONLY)
+	@Enumerated(EnumType.STRING)
+	private StatusServiceOrder status;
+		
+	@JsonProperty(access = Access.READ_ONLY)
 	private LocalDateTime finishDate;
+	
+	@Column(columnDefinition = "TEXT")
+	private String note;
 	
 	@ManyToOne
 	private Client client;
@@ -79,6 +90,14 @@ public class ServiceOrder implements Serializable {
 
 	public void setFinishDate(LocalDateTime finishDate) {
 		this.finishDate = finishDate;
+	}
+
+	public String getNote() {
+		return note;
+	}
+
+	public void setNote(String note) {
+		this.note = note;
 	}
 
 	public Client getClient() {
