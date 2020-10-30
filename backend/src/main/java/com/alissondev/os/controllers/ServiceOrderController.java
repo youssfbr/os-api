@@ -1,8 +1,11 @@
 package com.alissondev.os.controllers;
 
+import java.util.List;
+
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -21,17 +24,14 @@ public class ServiceOrderController {
 	private ServiceOrderService service;
 	
 	@GetMapping
-	public String list() {
-		
-		return "ok";
+	public List<ServiceOrder> findAll() {		
+		return service.findAll();
 	}
 	
 	@PostMapping
 	@ResponseStatus(HttpStatus.CREATED)
-	public ServiceOrder insert(@RequestBody ServiceOrder order) {
-		//order = service.save(order);
+	public ServiceOrder insert(@Valid @RequestBody ServiceOrder order) {
 		
-	//	return ResponseEntity.ok(order);
 		return service.save(order);
 	}
 }

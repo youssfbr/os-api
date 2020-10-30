@@ -11,7 +11,7 @@ import com.alissondev.os.entities.ServiceOrder;
 import com.alissondev.os.entities.enums.StatusServiceOrder;
 import com.alissondev.os.repositories.ClientRepository;
 import com.alissondev.os.repositories.ServiceOrderRepository;
-import com.alissondev.os.services.exceptions.NotFoundException;
+import com.alissondev.os.services.exceptions.BadRequestException;
 
 @Service
 public class ServiceOrderService {
@@ -29,7 +29,7 @@ public class ServiceOrderService {
 	public ServiceOrder save(ServiceOrder order) {
 		
 		Client client = clientRepository.findById(order.getClient().getId())
-				.orElseThrow(() -> new NotFoundException("Cliente não encontrado")) ;
+				.orElseThrow(() -> new BadRequestException("Cliente não encontrado")) ;
 		
 		order.setClient(client);
 		order.setStatus(StatusServiceOrder.ABERTA);

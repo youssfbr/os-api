@@ -8,13 +8,17 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import com.alissondev.os.controllers.exceptions.ValidationGroups;
 
 
 @Entity
 public class Client implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
+	@NotNull(groups = ValidationGroups.ClientId.class)
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;

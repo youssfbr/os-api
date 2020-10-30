@@ -12,7 +12,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.groups.ConvertGroup;
+import javax.validation.groups.Default;
 
+import com.alissondev.os.controllers.exceptions.ValidationGroups;
 import com.alissondev.os.entities.enums.StatusServiceOrder;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.fasterxml.jackson.annotation.JsonProperty.Access;
@@ -25,8 +31,11 @@ public class ServiceOrder implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	private String description;
-	private BigDecimal price;
+	@Valid
+	@ConvertGroup(from = Default.class, to = ValidationGroups.ClientId.class)
+	@NotNull
+	@ManyToOne
+	private Client client;
 	
 	@JsonProperty(access = Access.READ_ONLY)
 	private LocalDateTime openDate;
@@ -34,15 +43,21 @@ public class ServiceOrder implements Serializable {
 	@JsonProperty(access = Access.READ_ONLY)
 	@Enumerated(EnumType.STRING)
 	private StatusServiceOrder status;
-		
-	@JsonProperty(access = Access.READ_ONLY)
-	private LocalDateTime finishDate;
+	
+	@NotBlank
+	private String description;
 	
 	@Column(columnDefinition = "TEXT")
 	private String note;
 	
-	@ManyToOne
-	private Client client;
+	private BigDecimal price;
+			
+	@JsonProperty(access = Access.READ_ONLY)
+	private LocalDateTime finishDate;
+	
+	
+	
+	
 
 	public Long getId() {
 		return id;

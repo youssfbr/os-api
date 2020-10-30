@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.alissondev.os.services.exceptions.BadRequestException;
 import com.alissondev.os.services.exceptions.EmailExistException;
 import com.alissondev.os.services.exceptions.NotFoundException;
 
@@ -59,7 +60,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 	}
 	
 	@ExceptionHandler(NotFoundException.class)
-	public ResponseEntity<StandardError> NotFound(NotFoundException e, HttpServletRequest request) {
+	public ResponseEntity<StandardError> notFound(NotFoundException e, HttpServletRequest request) {
 		HttpStatus status = HttpStatus.NOT_FOUND;
 
 		StandardError err = new StandardError();
@@ -69,5 +70,18 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 		err.setPath(request.getRequestURI());		
 		
 		return ResponseEntity.status(status).body(err);		
+	}
+	
+	@ExceptionHandler(BadRequestException.class)
+	public ResponseEntity<StandardError> badRequest(BadRequestException e, HttpServletRequest request) {
+		HttpStatus status = HttpStatus.BAD_REQUEST;
+		
+		StandardError err = new StandardError();
+		err.setTimestamp(Instant.now());
+		err.setStatus(status.value());
+		err.setMessage(e.getMessage());
+		err.setPath(request.getRequestURI());		
+		
+		return ResponseEntity.status(status).body(err);
 	}
 }

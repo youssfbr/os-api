@@ -24,7 +24,6 @@ import com.alissondev.os.services.ClientService;
 @RestController
 @RequestMapping(value = "/clients")
 public class ClientController {
-
 	
 	@Autowired
 	private ClientService service;
