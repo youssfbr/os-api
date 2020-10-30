@@ -1,6 +1,6 @@
 package com.alissondev.os.services;
 
-import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,7 +39,7 @@ public class ServiceOrderService {
 		
 		order.setClient(client);
 		order.setStatus(StatusServiceOrder.ABERTA);
-		order.setOpenDate(LocalDateTime.now());
+		order.setOpenDate(OffsetDateTime.now());
 		
 		return repository.save(order);
 	}

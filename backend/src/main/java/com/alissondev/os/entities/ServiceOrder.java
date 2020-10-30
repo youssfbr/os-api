@@ -3,6 +3,7 @@ package com.alissondev.os.entities;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.time.OffsetDateTime;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -38,7 +39,7 @@ public class ServiceOrder implements Serializable {
 	private Client client;
 	
 	@JsonProperty(access = Access.READ_ONLY)
-	private LocalDateTime openDate;
+	private OffsetDateTime openDate;
 	
 	@JsonProperty(access = Access.READ_ONLY)
 	@Enumerated(EnumType.STRING)
@@ -53,7 +54,7 @@ public class ServiceOrder implements Serializable {
 	private BigDecimal price;
 			
 	@JsonProperty(access = Access.READ_ONLY)
-	private LocalDateTime finishDate;
+	private OffsetDateTime finishDate;
 	
 	
 	
@@ -67,11 +68,11 @@ public class ServiceOrder implements Serializable {
 		this.id = id;
 	}
 
-	public LocalDateTime getOpenDate() {
+	public OffsetDateTime getOpenDate() {
 		return openDate;
 	}
 
-	public void setOpenDate(LocalDateTime openDate) {
+	public void setOpenDate(OffsetDateTime openDate) {
 		this.openDate = openDate;
 	}
 
@@ -99,11 +100,11 @@ public class ServiceOrder implements Serializable {
 		this.price = price;
 	}
 
-	public LocalDateTime getFinishDate() {
+	public OffsetDateTime getFinishDate() {
 		return finishDate;
 	}
 
-	public void setFinishDate(LocalDateTime finishDate) {
+	public void setFinishDate(OffsetDateTime finishDate) {
 		this.finishDate = finishDate;
 	}
 

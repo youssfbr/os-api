@@ -2,6 +2,7 @@ package com.alissondev.os.controllers.exceptions;
 
 import java.io.Serializable;
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.List;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -12,6 +13,7 @@ public class StandardError implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Instant timestamp;
+	private OffsetDateTime timestamp1;
 	private Integer status;
 	private String error;
 	private String message;
@@ -55,6 +57,15 @@ public class StandardError implements Serializable {
 
 	public void setTimestamp(Instant timestamp) {
 		this.timestamp = timestamp;
+	}
+
+	
+	public OffsetDateTime getTimestamp1() {
+		return timestamp1;
+	}
+
+	public void setTimestamp1(OffsetDateTime timestamp1) {
+		this.timestamp1 = timestamp1;
 	}
 
 	public Integer getStatus() {

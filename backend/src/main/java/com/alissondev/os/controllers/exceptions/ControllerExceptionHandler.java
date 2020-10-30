@@ -1,6 +1,7 @@
 package com.alissondev.os.controllers.exceptions;
 
 import java.time.Instant;
+import java.time.OffsetDateTime;
 import java.util.ArrayList;
 
 import javax.servlet.http.HttpServletRequest;
@@ -38,6 +39,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 		
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
+		err.setTimestamp1(OffsetDateTime.now());
 		err.setStatus(status.value());
 		err.setError("Um ou mais campos inválidos. Verifique se estão nulos e preencha-os corretamente.");
 		err.setFields(fields);
@@ -51,6 +53,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
+		err.setTimestamp1(OffsetDateTime.now());
 		err.setStatus(status.value());		
 		err.setError("Email já existente");
 		err.setMessage(e.getMessage());
@@ -65,6 +68,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
+		err.setTimestamp1(OffsetDateTime.now());
 		err.setStatus(status.value());
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());		
@@ -78,6 +82,7 @@ public class ControllerExceptionHandler extends ResponseEntityExceptionHandler{
 		
 		StandardError err = new StandardError();
 		err.setTimestamp(Instant.now());
+		err.setTimestamp1(OffsetDateTime.now());
 		err.setStatus(status.value());
 		err.setMessage(e.getMessage());
 		err.setPath(request.getRequestURI());		
