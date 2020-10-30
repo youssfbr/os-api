@@ -12,6 +12,7 @@ import com.alissondev.os.entities.enums.StatusServiceOrder;
 import com.alissondev.os.repositories.ClientRepository;
 import com.alissondev.os.repositories.ServiceOrderRepository;
 import com.alissondev.os.services.exceptions.BadRequestException;
+import com.alissondev.os.services.exceptions.NotFoundException;
 
 @Service
 public class ServiceOrderService {
@@ -24,6 +25,11 @@ public class ServiceOrderService {
 	
 	public List<ServiceOrder> findAll() {
 		return repository.findAll();
+	}
+	
+	public ServiceOrder findById(Long id) {
+		return repository.findById(id)
+				.orElseThrow(() -> new NotFoundException("Ordem de Serviço não encontrada"));
 	}
 	
 	public ServiceOrder save(ServiceOrder order) {
